@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For My Darling ♥️</title>
+
+<style>
+body{
+ margin:0;
+ font-family:'Segoe UI';
+ background:linear-gradient(to right,#ff6fa5,#ff3d87);
+ color:white;
+ text-align:center;
+ overflow-x:hidden;
+}
+
+.page{display:none;padding:40px;}
+.active{display:block;animation:fade 1s ease;}
+
+@keyframes fade{
+ from{opacity:0;}
+ to{opacity:1;}
+}
+
+button{
+ padding:10px 20px;
+ font-size:16px;
+ border:none;
+ border-radius:10px;
+ margin:15px;
+ cursor:pointer;
+ background:#ff0055;
+ color:white;
+}
+
+#noBtn{background:grey;}
+
+textarea{
+ width:85%;
+ height:120px;
+ border-radius:15px;
+ border:none;
+ padding:10px;
+ font-size:15px;
+}
+
+.room{
+ width:200px;
+ height:300px;
+ margin:auto;
+ perspective:1000px;
+ cursor:pointer;
+}
+
+.door{
+ width:100%;
+ height:100%;
+ background:#8b0000;
+ border-radius:8px;
+ transform-origin:left;
+ transition:transform 1.5s ease;
+ box-shadow:0 0 20px black;
+}
+
+.open{transform:rotateY(-110deg);}
+
+.giftBtn{
+ background:white;
+ color:#ff0066;
+ font-weight:bold;
+}
+
+.loveBox{
+ background:white;
+ color:#ff0066;
+ padding:30px;
+ border-radius:20px;
+ width:85%;
+ margin:20px auto;
+ line-height:1.8;
+}
+
+.scratch-container{
+ margin:30px auto;
+ width:320px;
+ height:180px;
+ position:relative;
+ display:none;
+}
+
+canvas{
+ position:absolute;
+ left:0;
+ top:0;
+ border-radius:15px;
+}
+
+.hidden-msg{
+ width:100%;
+ height:100%;
+ background:white;
+ color:#ff0055;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ border-radius:15px;
+ font-size:18px;
+ padding:15px;
+ font-weight:bold;
+}
+
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+ <source src="ZAYN - Dusk Till Dawn feat. Sia.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FRONT -->
+<div class="page active" id="front">
+<h1>Hey Darling ♥️</h1>
+<p>I have something for you ♥️</p>
+<p>Tap to Open ✨</p>
+</div>
+
+<!-- VALENTINE -->
+<div class="page" id="valentine">
+<h1>Will You Be My Valentine? 💖</h1>
+<h2 id="typing"></h2>
+<button id="yesBtn">Yes 💘</button>
+<button id="noBtn">No 😢</button>
+</div>
+
+<!-- SECRET ROOM -->
+<div class="page" id="secret">
+<h1>Secret Room 🚪</h1>
+
+<div class="room" onclick="openDoor()">
+<div class="door" id="door"></div>
+</div>
+
+<div id="giftSection" style="display:none;">
+<button class="giftBtn" onclick="goLoveLetter()">Gift 1 🎁</button>
+<button class="giftBtn" onclick="goParis()">Gift 2 🎁</button>
+</div>
+</div>
+
+<!-- LOVE LETTER -->
+<div class="page" id="loveLetterPage">
+<h1>For You ♥️</h1>
+<div class="loveBox">
+MR.Viswanath ♥️, from dusk till dawn 🌙✨ I don’t just love you for the moments we share, I love you for the way you exist in my world so naturally, so beautifully. You are the quiet strength that holds me steady when everything feels uncertain, the warmth that wraps around my heart when life feels cold ❤️. Every single heartbeat of mine seems to echo your name, and every thought of the future somehow includes you standing beside me 🤍. With you, even silence feels meaningful, even distance feels temporary, and even ordinary days feel magical 🌅💫. I want to be the one who celebrates your victories, comforts you in your struggles, supports your dreams, and walks beside you no matter where the road leads. Through every sunrise and every sunset, through every laugh and every tear, I choose you — not just today, but every day 💞. You are my safe place, my forever comfort, my greatest blessing, and my once-in-a-lifetime kind of love 💖. No matter how far the world stretches, my heart will always belong with yours… because you are not just my love, you are my always and forever ♥️.
+</div>
+<button onclick="goSecret()">Back</button>
+<button onclick="goQ1()">Next ➡</button>
+</div>
+
+<!-- PARIS PAGE -->
+<div class="page" id="parisPage">
+<h1>I Love You THANGAMEYY♥️</h1>
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Paris_Night.jpg" width="85%" style="border-radius:20px;">
+<p>One day let's walk in Paris together 💖</p>
+<button onclick="goSecret()">Back</button>
+<button onclick="goQ1()">Next ➡</button>
+</div>
+
+<!-- QUESTIONS -->
+<div class="page" id="q1">
+<h2>1. If you could relive one day we've spent together, which day would you choose and why?</h2>
+<textarea></textarea><br>
+<button onclick="goQ2()">Next ➡</button>
+</div>
+
+<div class="page" id="q2">
+<h2>2. What's a moment we shared that you replay in your mind when you're alone?</h2>
+<textarea></textarea><br>
+<button onclick="goQ3()">Next ➡</button>
+</div>
+
+<div class="page" id="q3">
+<h2>3. What's something I've done for you that meant a lot?</h2>
+<textarea></textarea><br>
+<button onclick="goQ4()">Next ➡</button>
+</div>
+
+<div class="page" id="q4">
+<h2>4. When you tell someone about me, what details do you always say first?</h2>
+<textarea></textarea><br>
+<button onclick="goQ5()">Next ➡</button>
+</div>
+
+<div class="page" id="q5">
+<h2>5. If you had one wish for us, what would it be?</h2>
+<textarea></textarea><br>
+<button onclick="goReveal()">Finish 💖</button>
+</div>
+
+<!-- SCRATCH PAGE -->
+<div class="page" id="scratchPage">
+<h1>Final Surprise 💖</h1>
+
+<button onclick="showScratch()">Tap To Reveal ✨</button>
+
+<div class="scratch-container" id="scratchBox">
+<div class="hidden-msg">
+I will be there for you,<br>
+from dusk till dawn ♥️<br><br>
+♥️I love you AMMUU and once again happy valentines dayy ♥️
+</div>
+<canvas id="scratchCanvas" width="320" height="180"></canvas>
+</div>
+</div>
+
+<script>
+
+/* FRONT */
+front.onclick=function(){
+ front.classList.remove("active");
+ valentine.classList.add("active");
+ bgMusic.volume=0.6;
+ bgMusic.play();
+};
+
+/* TYPING */
+const text="Viswanath ♥️";
+let i=0;
+function type(){
+ if(i<text.length){
+  typing.innerHTML+=text.charAt(i);
+  i++;
+  setTimeout(type,120);
+ }
+}
+type();
+
+/* YES GROW */
+let size=20;
+noBtn.onclick=function(){
+ size+=15;
+ yesBtn.style.fontSize=size+"px";
+};
+yesBtn.onclick=function(){
+ valentine.classList.remove("active");
+ secret.classList.add("active");
+};
+
+/* DOOR */
+function openDoor(){
+ door.classList.add("open");
+ setTimeout(()=>giftSection.style.display="block",1500);
+}
+
+function goLoveLetter(){secret.classList.remove("active");loveLetterPage.classList.add("active");}
+function goParis(){secret.classList.remove("active");parisPage.classList.add("active");}
+function goSecret(){loveLetterPage.classList.remove("active");parisPage.classList.remove("active");secret.classList.add("active");}
+
+function goQ1(){loveLetterPage.classList.remove("active");parisPage.classList.remove("active");q1.classList.add("active");}
+function goQ2(){q1.classList.remove("active");q2.classList.add("active");}
+function goQ3(){q2.classList.remove("active");q3.classList.add("active");}
+function goQ4(){q3.classList.remove("active");q4.classList.add("active");}
+function goQ5(){q4.classList.remove("active");q5.classList.add("active");}
+function goReveal(){q5.classList.remove("active");scratchPage.classList.add("active");}
+
+function showScratch(){
+ document.getElementById("scratchBox").style.display="block";
+ initScratch();
+}
+
+function initScratch(){
+ const canvas=document.getElementById("scratchCanvas");
+ const ctx=canvas.getContext("2d");
+ ctx.fillStyle="#aaa";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ let scratching=false;
+ canvas.onmousedown=()=>scratching=true;
+ canvas.onmouseup=()=>scratching=false;
+ canvas.onmousemove=scratch;
+ canvas.ontouchstart=()=>scratching=true;
+ canvas.ontouchend=()=>scratching=false;
+ canvas.ontouchmove=scratch;
+
+ function scratch(e){
+  if(!scratching)return;
+  const rect=canvas.getBoundingClientRect();
+  const x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+  const y=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
+  ctx.globalCompositeOperation="destination-out";
+  ctx.beginPath();
+  ctx.arc(x,y,18,0,Math.PI*2);
+  ctx.fill();
+ }
+}
+
+</script>
+
+</body>
+</html>
